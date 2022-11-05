@@ -1,0 +1,14 @@
+.mypy_cache
+.coverage
+htmlcov
+
+*.pyc
+/dist/
+/bin/
+.idea/
+/include/
+/lib/
+/share/
+/lib64
+/pip-selfcheck.json
+/pyvenv.cfg

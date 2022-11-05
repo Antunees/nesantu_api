@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  api:
+    env_file:
+      - .env
+    image: nesantu_api
+    restart: always
+    container_name: nesantu-api
+    ports:
+      - "8100:8100"
+    depends_on:
+      - redis-mother
+      - db
+
+  redis-mother:
+    image: redis
+    restart: always
+    container_name: nesantu-redis-mother
+    command: redis-server --requirepass q789we677qy87dy7q8wyd9qwd8q79we6391 --bind 0.0.0.0 --port 6391 --databases 3
+    ports:
+      - "6391:6391"
+    depends_on:
+      - db
+
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   networks:
+  #     - default
+  #   depends_on:
+  #     - db
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "5050:5050"
+
+  db:
+    image: postgres:12
+    # volumes:
+    #   - /home/root/nesantu/pg:/var/lib/postgresql/data/pgdata
+    #   - /home/root/nesantu/images:/images
+    env_file:
+      - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
